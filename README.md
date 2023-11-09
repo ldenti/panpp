@@ -8,4 +8,10 @@ mkdir build
 cd build
 cmake ..
 make
+cd ..
+```
+
+``` sh
+./PANPP index -i INDEX -@4 data/tiny.fa
+./PANPP search -v INDEX AGA
 ```
