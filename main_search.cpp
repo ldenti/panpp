@@ -6,6 +6,8 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
+#include "usage.hpp"
+
 int main_search(int argc, char **argv) {
   bool verbose = false;
   // TODO: improve CLI
@@ -20,10 +22,10 @@ int main_search(int argc, char **argv) {
       verbose = true;
       continue;
     case 'h':
-      // cerr << INDEX_USAGE_MESSAGE;
+      std::cerr << SEARCH_USAGE_MESSAGE;
       return 0;
     default:
-      // cerr << INDEX_USAGE_MESSAGE;
+      std::cerr << SEARCH_USAGE_MESSAGE;
       return 1;
     }
   }
@@ -35,7 +37,7 @@ int main_search(int argc, char **argv) {
   if (verbose) {
     unsigned char *bwt = rlcsa->readBWT();
     uint size = rlcsa->getSize() + rlcsa->getNumberOfSequences();
-    for (int i = 0; i < size; ++i)
+    for (uint i = 0; i < size; ++i)
       if (bwt[i] == 0)
         std::cerr << '|';
       else

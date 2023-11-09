@@ -11,7 +11,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
-// #include "argument_parser.hpp"
+#include "usage.hpp"
 
 KSEQ_INIT(gzFile, gzread)
 
@@ -79,15 +79,15 @@ int main_index(int argc, char **argv) {
       spdlog::set_level(spdlog::level::debug);
       continue;
     case 'h':
-      // cerr << INDEX_USAGE_MESSAGE;
+      std::cerr << INDEX_USAGE_MESSAGE;
       return 0;
     default:
-      // cerr << INDEX_USAGE_MESSAGE;
+      std::cerr << INDEX_USAGE_MESSAGE;
       return 1;
     }
   }
   if (argc - optind < 1) {
-    // cerr << INDEX_USAGE_MESSAGE;
+    std::cerr << INDEX_USAGE_MESSAGE;
     return 1;
   }
   std::vector<std::string> inputs;
