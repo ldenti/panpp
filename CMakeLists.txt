@@ -7,14 +7,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(PANPP VERSION 2.0.0)
-add_executable(PANPP main.cpp)
+add_executable(PANPP main_index.cpp main_search.cpp main.cpp)
 set_target_properties(PANPP PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 target_compile_options(PANPP PRIVATE -Wall -Wextra)
 add_definitions(-DMASSIVE_DATA_RLCSA)
 
-# find_package(Threads REQUIRED)
 find_package(OpenMP REQUIRED)
-find_library(SPDLOG libspdlog.so REQUIRED)
+# find_library(SPDLOG libspdlog.so REQUIRED)
 
 # rlcsa
 message(STATUS "rlcsa will be built from source")
@@ -35,16 +34,24 @@ add_library(RLCSA STATIC IMPORTED)
 set_target_properties(RLCSA PROPERTIES IMPORTED_LOCATION ${RLCSA_SOURCE_DIR}/librlcsa.a)
 add_dependencies(RLCSA rlcsa)
 
-add_dependencies(PANPP rlcsa)
+# spdlog
+message(STATUS "spdlog will be built from source")
+FetchContent_Declare(spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG 7e635fca68d014934b4af8a1cf874f63989352b7) # v1.12.0
+FetchContent_MakeAvailable(spdlog)
+
+add_dependencies(PANPP rlcsa spdlog)
 
 target_include_directories(PANPP
   PRIVATE ${RLCSA_INCLUDE_DIR}
+  PRIVATE ${SPDLOG_INCLUDE_DIR}
   PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(PANPP
   PUBLIC RLCSA
-  PUBLIC spdlog
+  PUBLIC spdlog::spdlog
   PUBLIC z
   PUBLIC OpenMP::OpenMP_CXX
 )
