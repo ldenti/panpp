@@ -76,7 +76,7 @@ int main_search(int argc, char **argv) {
   char *query = argv[2];
   // int threads = 4;
 
-  const CSA::RLCSA *rlcsa = new CSA::RLCSA("XXX", false);
+  const CSA::RLCSA *rlcsa = new CSA::RLCSA(index_prefix, false);
 
   // unsigned char *bwt = rlcsa->readBWT();
   // for (int i = 0; i < size; ++i)
