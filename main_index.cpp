@@ -5,7 +5,6 @@
 #include <zlib.h>
 
 #include "kseq.h"
-#include "misc/utils.h"
 #include "rlcsa.h"
 #include "rlcsa_builder.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -97,14 +96,14 @@ int main_index(int argc, char **argv) {
   spdlog::info("Initializing..");
   CSA::RLCSABuilder builder(block_size, sample_rate, 0, threads, NULL);
 
+  uint64_t max_size = ((uint64_t)1 << 32) - 1;
+  unsigned char *data =
+      (unsigned char *)calloc(max_size, sizeof(unsigned char));
   for (const std::string &fa_path : inputs) {
     spdlog::info("Reading {}..", fa_path);
     uint64_t size = get_size_fa(fa_path.c_str());
-    unsigned char *data = (unsigned char *)calloc(
-        size,
-        sizeof(unsigned char)); // TODO: allocate once and increase when needed
     concatenate_fa(fa_path.c_str(), size, data);
-    // // Debug
+    // Debug
     // for (uint i = 0; i < size; ++i)
     //   if (data[i] == 0)
     //     std::cerr << '|';
@@ -123,8 +122,8 @@ int main_index(int argc, char **argv) {
     builder.insertFromFile(fa_path, data);
 
     delete index;
-    delete data;
   }
+  free(data);
 
   spdlog::info("Storing full index to {}..", index_prefix);
   CSA::RLCSA *rlcsa = builder.getRLCSA();
