@@ -67,14 +67,17 @@ int main_index(int argc, char **argv) {
 
   // TODO: improve CLI
   int c;
-  while ((c = getopt(argc, argv, "h")) >= 0) {
+  while ((c = getopt(argc, argv, "i:@:vh")) >= 0) {
     switch (c) {
     case 'i':
       index_prefix = optarg;
+      continue;
     case '@':
       threads = atoi(optarg);
+      continue;
     case 'v':
       spdlog::set_level(spdlog::level::debug);
+      continue;
     case 'h':
       // cerr << INDEX_USAGE_MESSAGE;
       return 0;
