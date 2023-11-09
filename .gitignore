@@ -1,0 +1,6 @@
+PANPP
+*~
+build/
+*.array
+*.parameters
+*.fa
