@@ -14,4 +14,11 @@ cd ..
 ``` sh
 ./PANPP index -i INDEX -@4 data/tiny.fa
 ./PANPP search -v INDEX AGA
+./PANPP exact INDEX data/tiny.fq
+
+./PANPP fmdindex data/tiny.fa
+./PANPP fmdexact data/tiny.fa.fmd data/tiny.fq
 ```
+
+### TODO
+- [ ] FMD-index construction

@@ -1,22 +1,42 @@
 #include <cstdint>
 #include <getopt.h>
 #include <iostream>
+#include <zlib.h>
 
+#include "kseq.h"
 #include "rlcsa.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
 #include "usage.hpp"
 
+KSEQ_INIT(gzFile, gzread)
+
+int main_exact(int argc, char **argv) {
+  char *index_prefix = argv[1];
+  char *query_path = argv[2];
+
+  const CSA::RLCSA *rlcsa = new CSA::RLCSA(index_prefix, false);
+  CSA::pair_type range;
+  gzFile fp = gzopen(query_path, "r");
+  kseq_t *seq = kseq_init(fp);
+  int l;
+  while ((l = kseq_read(seq)) >= 0) {
+    range = rlcsa->count(seq->seq.s);
+    std::cerr << seq->name.s << ": "
+              << range.first + rlcsa->getNumberOfSequences() << ","
+              << range.second + rlcsa->getNumberOfSequences() << std::endl;
+  }
+  kseq_destroy(seq);
+  gzclose(fp);
+  return 0;
+}
+
 int main_search(int argc, char **argv) {
   bool verbose = false;
-  // TODO: improve CLI
   int c;
   while ((c = getopt(argc, argv, "vh")) >= 0) {
     switch (c) {
-    // case '@':
-    //   threads = atoi(optarg);
-    //   continue;
     case 'v':
       spdlog::set_level(spdlog::level::debug);
       verbose = true;
@@ -29,6 +49,7 @@ int main_search(int argc, char **argv) {
       return 1;
     }
   }
+
   char *index_prefix = argv[optind++];
   char *query = argv[optind++];
 
