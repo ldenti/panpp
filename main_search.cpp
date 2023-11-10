@@ -9,6 +9,7 @@
 #include "spdlog/spdlog.h"
 
 #include "usage.hpp"
+#include "utils.hpp"
 
 KSEQ_INIT(gzFile, gzread)
 
@@ -22,6 +23,7 @@ int main_exact(int argc, char **argv) {
   kseq_t *seq = kseq_init(fp);
   int l;
   while ((l = kseq_read(seq)) >= 0) {
+    seq_char2nt6(l, seq->seq.s);
     range = rlcsa->count(seq->seq.s);
     std::cout << seq->name.s << ": "
               << range.first + rlcsa->getNumberOfSequences() << ","
@@ -52,6 +54,7 @@ int main_search(int argc, char **argv) {
 
   char *index_prefix = argv[optind++];
   char *query = argv[optind++];
+  seq_char2nt6(strlen(query), query);
 
   const CSA::RLCSA *rlcsa = new CSA::RLCSA(index_prefix, false);
 
