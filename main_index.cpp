@@ -53,7 +53,9 @@ void concatenate_fa(const char *fa_path, uint64_t size, unsigned char *data) {
   while ((l = kseq_read(seq)) >= 0) {
     // seq_char2nt6(l, (unsigned char *)seq->seq.s);
     memmove(data + curr_l, seq->seq.s, l);
-    curr_l += l + 1;
+    curr_l += l;
+    data[curr_l] = '\0';
+    ++curr_l;
     spdlog::debug("Moved {} chars (out of {})", curr_l, size);
   }
   kseq_destroy(seq);
