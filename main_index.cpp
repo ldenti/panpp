@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <cstdint>
 #include <getopt.h>
 #include <iostream>
@@ -103,6 +104,7 @@ int main_index(int argc, char **argv) {
   for (const std::string &fa_path : inputs) {
     spdlog::info("Reading {}..", fa_path);
     uint64_t size = get_size_fa(fa_path.c_str());
+    assert(size < max_size);
     concatenate_fa(fa_path.c_str(), size, data);
     // Debug
     // for (uint i = 0; i < size; ++i)
