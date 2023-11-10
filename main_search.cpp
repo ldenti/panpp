@@ -23,7 +23,7 @@ int main_exact(int argc, char **argv) {
   int l;
   while ((l = kseq_read(seq)) >= 0) {
     range = rlcsa->count(seq->seq.s);
-    std::cerr << seq->name.s << ": "
+    std::cout << seq->name.s << ": "
               << range.first + rlcsa->getNumberOfSequences() << ","
               << range.second + rlcsa->getNumberOfSequences() << std::endl;
   }

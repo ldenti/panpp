@@ -185,7 +185,7 @@ int main_fmdexact(int argc, char *argv[]) {
       s[i] = s[i] < 128 ? seq_nt6_table[s[i]] : 5;
 
     range = backward_search(index, s, l - 1);
-    std::cerr << ks->name.s << ": " << range.x[0] << ","
+    std::cout << ks->name.s << ": " << range.x[0] << ","
               << range.x[0] + range.x[2] - 1 << std::endl;
   }
   kseq_destroy(ks);
