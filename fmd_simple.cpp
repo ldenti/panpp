@@ -1,7 +1,5 @@
 #include "fmd_simple.hpp"
 
-const std::string BASES = "NACGT";
-
 FMDPosition::FMDPosition(CSA::usint forward_start, CSA::usint reverse_start,
                          CSA::usint end_offset)
     : forward_start(forward_start), reverse_start(reverse_start),

@@ -9,7 +9,6 @@
 #include "kseq.h"
 #include "rlcsa.h"
 #include "rlcsa_builder.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
 #include "usage.hpp"
@@ -159,6 +158,8 @@ int main_index(int argc, char **argv) {
     rlcsa->writeTo(index_prefix);
   }
   delete rlcsa;
+
+  spdlog::info("Done.");
 
   return 0;
 }

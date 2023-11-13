@@ -27,7 +27,7 @@ static unsigned char seq_nt6_table[128] = {
     5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 2, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5,
     5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
 
-static const std::vector<std::string> int2char({"$", "A", "C", "G", "T", "N"});
+static const std::string int2char = "$ACGTN";
 
 static inline int kputsn(const char *p, int l, kstring_t *s) {
   if (s->l + l + 1 >= s->m) {

@@ -12,9 +12,15 @@ cd ..
 ```
 
 ``` sh
-./PANPP index -i INDEX -@4 data/tiny.fa
-./PANPP search -v INDEX AGA
-./PANPP exact INDEX data/tiny.fq
+# Index one or more fasta
+./PANPP index -i INDEX -@4 [FA...]
+# Run ping-pong
+./PANPP search INDEX FQ
+
+# Search a string S against the index
+./PANPP test -v INDEX S
+# Search multiple strings (in FASTQ format)
+./PANPP exact INDEX FQ
 
 1: 4,4
 2: 4,4
@@ -28,7 +34,8 @@ cd ..
 
 ### TODO
 - [X] ~FMD-index construction~
-- [X] queries on FMD
+- [X] ~queries on FMD~
 - [ ] start from given index
 - [ ] if partial indexes are already present, don't compute them
-- [ ] ping-pong
+- [X] ~ping-pong~
+- [ ] parallel ping-pong

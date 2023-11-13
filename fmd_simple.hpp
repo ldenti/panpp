@@ -32,8 +32,6 @@ typedef std::pair<CSA::usint, CSA::usint> pair_type;
 
 static const CSA::usint NUM_BASES = 5;
 
-extern const std::string BASES; // for debugging purposes
-
 /**
  * Represents the state (or result) of an FMD-index search, which is two ranges
  * (one for the forward sequence, and one for the reverse complement) of equal

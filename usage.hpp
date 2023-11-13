@@ -14,8 +14,9 @@ static const char *const INDEX_USAGE_MESSAGE =
     "\n";
 
 static const char *const SEARCH_USAGE_MESSAGE =
-    "Usage: PANPP search INDEX QUERY_STRING\n"
+    "Usage: PANPP search INDEX FQ\n"
     "      -v       verbose mode (default: false)\n"
+    // "      -@       set threads (default: 1)\n"
     "      -h       display this help and exit\n"
     "\n";
 
