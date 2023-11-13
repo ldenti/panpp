@@ -100,7 +100,7 @@ int main_search(int argc, char **argv) {
       if (bwt[i] == 0)
         std::cerr << '|';
       else
-        std::cerr << bwt[i];
+        std::cerr << int2char[bwt[i]];
     std::cerr << std::endl;
   }
 
