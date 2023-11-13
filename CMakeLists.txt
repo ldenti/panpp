@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(PANPP VERSION 2.0.0)
-add_executable(PANPP main_index.cpp main_search.cpp main_fmd.cpp main.cpp)
+add_executable(PANPP main_index.cpp main_search.cpp main_fmd.cpp fmd_simple.cpp main.cpp)
 set_target_properties(PANPP PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
 target_compile_options(PANPP PRIVATE -Wall -Wextra)
 add_definitions(-DMASSIVE_DATA_RLCSA)
