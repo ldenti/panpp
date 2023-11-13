@@ -19,3 +19,10 @@ Hardcoded parameters: number of reads and iterations.
 # move to this folder (path to PANPP is hardcoded to ../PANPP)
 bash check_search_big.sh FA RLCSAPREFIX FMD OUTPREFIX
 ```
+
+### compare_sfs.py
+Compare this pingpong output and original pingpong output and check if are the same.
+
+``` sh
+python3 compare_sfs.py [SFS] [SFS]
+```
