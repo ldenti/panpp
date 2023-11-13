@@ -8,6 +8,7 @@ using namespace std;
 int main_index(int argc, char *argv[]);
 int main_search(int argc, char *argv[]);
 int main_exact(int argc, char *argv[]);
+int main_exact2(int argc, char *argv[]);
 
 int main_fmdindex(int argc, char *argv[]);
 int main_fmdexact(int argc, char *argv[]);
@@ -23,6 +24,8 @@ int main(int argc, char *argv[]) {
     return main_search(argc - 1, argv + 1);
   else if (strcmp(argv[1], "exact") == 0)
     return main_exact(argc - 1, argv + 1);
+  else if (strcmp(argv[1], "exact2") == 0)
+    return main_exact2(argc - 1, argv + 1);
   else if (strcmp(argv[1], "fmdindex") == 0)
     return main_fmdindex(argc - 1, argv + 1);
   else if (strcmp(argv[1], "fmdexact") == 0)

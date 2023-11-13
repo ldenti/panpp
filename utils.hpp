@@ -1,6 +1,17 @@
 #ifndef PANPP_UTILS
 #define PANPP_UTILS
 
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <vector>
+
+#include "kseq.h"
+
+/**
+ * Return the "reverse" complement of a single character.
+ */
 #define fm6_comp(a) ((a) >= 1 && (a) <= 4 ? 5 - (a) : (a))
 
 #define fm6_set_intv(e, c, ik)                                                 \
@@ -38,5 +49,10 @@ static void seq_char2nt6(int l, char *s) {
   for (int i = 0; i < l; ++i)
     s[i] = s[i] < 128 ? seq_nt6_table[s[i]] : 5;
 }
+
+/**
+ * Return true if a character is a valid DNA base, and false otherwise.
+ */
+static inline bool isBase(uint64_t input) { return input >= 1 && input <= 5; }
 
 #endif

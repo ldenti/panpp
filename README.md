@@ -28,3 +28,7 @@ cd ..
 
 ### TODO
 - [X] ~FMD-index construction~
+- [X] queries on FMD
+- [ ] start from given index
+- [ ] if partial indexes are already present, don't compute them
+- [ ] ping-pong
