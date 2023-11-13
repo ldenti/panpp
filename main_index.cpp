@@ -130,11 +130,23 @@ int main_index(int argc, char **argv) {
     spdlog::info("Storing {}..", fa_path);
     if (index != 0 && index->isOk())
       index->writeTo(fa_path); // TODO: store to tmp dir
+    delete index;
 
     spdlog::info("Merging {}..", fa_path);
     builder.insertFromFile(fa_path, data);
 
+    spdlog::info("Indexing {} (R)..", fa_path);
+    index =
+        new CSA::RLCSA(data_r, size, block_size, sample_rate, threads, false);
+    spdlog::info("Storing {} (R)..", fa_path);
+    char *rev = (char *)malloc(fa_path.size() + 2);
+    strcpy(rev, fa_path.c_str());
+    strcat(rev, ".R");
+    if (index != 0 && index->isOk())
+      index->writeTo(rev); // TODO: store to tmp dir
     delete index;
+    spdlog::info("Merging {} (R)..", fa_path);
+    builder.insertFromFile(rev, data_r);
   }
   free(data);
 

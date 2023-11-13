@@ -16,9 +16,15 @@ cd ..
 ./PANPP search -v INDEX AGA
 ./PANPP exact INDEX data/tiny.fq
 
+1: 4,4
+2: 4,4
+3: 2,4
+4: 5,5
+5: 14,15
+
 ./PANPP fmdindex data/tiny.fa
 ./PANPP fmdexact data/tiny.fa.fmd data/tiny.fq
 ```
 
 ### TODO
-- [ ] FMD-index construction
+- [X] ~FMD-index construction~
