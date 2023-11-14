@@ -61,16 +61,26 @@ then
     threads=$3
     for n in "${Ns[@]}"
     do
-	log "Indexing $n haplotypes"
-	\time -vo $WD/$n/PANPP-index.time ../PANPP index -@ $threads -i $WD/$n/index $WD/$n/seqs/*.fa
+	if [ ! -f $WD/$n/index.rlcsa.array ]
+	then
+	    log "Indexing $n haplotypes"
+	    \time -vo $WD/$n/PANPP-index.time ../PANPP index -@ $threads -i $WD/$n/index $WD/$n/seqs/*.fa
+	else
+	    log "Skipping indexing $n haplotypes"
+	fi
     done
 elif [[ $mode == "index2" ]]
 then
     WD=$2
     for n in "${Ns[@]}"
     do
-	log "Indexing $n haplotypes"
-	\time -vo $WD/$n/SVDSS-index.time SVDSS index --fasta $WD/$n/seqs.fa --index $WD/$n/index.fmd
+	if [ ! -f $WD/$n/index.fmd ]
+	then
+	    log "Indexing $n haplotypes"
+	    \time -vo $WD/$n/SVDSS-index.time SVDSS index --fasta $WD/$n/seqs.fa --index $WD/$n/index.fmd
+	else
+	    log "NOT indexing $n haplotypes"
+	fi
     done
 elif [[ $mode == "search1" ]]
 then
@@ -80,9 +90,14 @@ then
     do
 	for cov in "${COV[@]}"
 	do
-	    mkdir -p $WD/$n/${cov}x/
-	    log "Searching from ${cov}x sample against $n haplotypes"
-	    \time -vo $WD/$n/${cov}x/PANPP-search.time ../PANPP search $WD/$n/index $WD/reads/${cov}x.fq > $WD/$n/${cov}x/PANPP.sfs
+	    if [ ! -f $WD/$n/${cov}x/PANPP.sfs ]
+	    then
+		mkdir -p $WD/$n/${cov}x/
+		log "Searching from ${cov}x sample against $n haplotypes"
+		\time -vo $WD/$n/${cov}x/PANPP-search.time ../PANPP search $WD/$n/index $WD/reads/${cov}x.fq > $WD/$n/${cov}x/PANPP.sfs
+	    else
+	        log "NOT searching from ${cov}x sample against $n haplotypes"
+	    fi
 	done
     done
 elif [[ $mode == "search2" ]]
@@ -93,10 +108,15 @@ then
     do
 	for cov in "${COV[@]}"
 	do
-	    mkdir -p $WD/$n/${cov}x/
-	    log "Searching from ${cov}x sample against $n haplotypes"
-	    \time -vo $WD/$n/${cov}x/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/reads/${cov}x.fq --workdir $WD/$n/${cov}x/SVDSS --threads $threads
-	    cat $WD/$n/${cov}x/SVDSS/*.sfs > $WD/$n/${cov}x/SVDSS.sfs
+	    if [ ! -f $WD/$n/${cov}x/SVDSS.sfs ]
+	    then
+		mkdir -p $WD/$n/${cov}x/
+		log "Searching from ${cov}x sample against $n haplotypes"
+		\time -vo $WD/$n/${cov}x/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/reads/${cov}x.fq --workdir $WD/$n/${cov}x/SVDSS --threads $threads
+		cat $WD/$n/${cov}x/SVDSS/*.sfs > $WD/$n/${cov}x/SVDSS.sfs
+	    else
+	        log "NOT searching from ${cov}x sample against $n haplotypes"
+	    fi
 	done
     done
 elif [[ $mode == "compare" ]]
