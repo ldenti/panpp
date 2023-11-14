@@ -22,10 +22,10 @@ def main():
 
     assert sfs_1.keys() == sfs_2.keys()
     for k in sfs_1.keys():
-        assert sfs_1[k] == sfs_2[k]
-        # print(k, len(sfs_1[k] & sfs_2[k]))
-        # print(sfs_1[k] - sfs_2[k])
-        # print(sfs_2[k] - sfs_1[k])
+        if sfs_1[k] != sfs_2[k]:
+            print(k, len(sfs_1[k] & sfs_2[k]))
+            print(sfs_1[k] - sfs_2[k])
+            print(sfs_2[k] - sfs_1[k])
 
 
 if __name__ == "__main__":
