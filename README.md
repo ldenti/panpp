@@ -14,22 +14,15 @@ cd ..
 ``` sh
 # Index one or more fasta
 ./PANPP index -i INDEX -@4 [FA...]
-# Run ping-pong
-./PANPP search INDEX FQ
-
-# Search a string S against the index
-./PANPP test -v INDEX S
-# Search multiple strings (in FASTQ format)
-./PANPP exact INDEX FQ
-
-1: 4,4
-2: 4,4
-3: 2,4
-4: 5,5
-5: 14,15
-
-./PANPP fmdindex data/tiny.fa
-./PANPP fmdexact data/tiny.fa.fmd data/tiny.fq
+# Run ping-pong over input FASTA/FASTQ
+./PANPP search INDEX FX
+```
+### Example
+``` sh
+./PANPP index example/tiny.fa -i example/tiny
+./PANPP search example/tiny example/tiny.fq
+# 6	0	5
+# *	7	4
 ```
 
 ### TODO
