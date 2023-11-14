@@ -31,6 +31,6 @@ cd ..
 - [ ] start from given index
 - [ ] if partial indexes are already present, don't compute them
 - [X] ~ping-pong~
-- [ ] parallel ping-pong
+- [X] ~parallel ping-pong~
 - [X] ~assembler~
 - [X] ~flanking~

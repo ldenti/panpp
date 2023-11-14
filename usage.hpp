@@ -17,6 +17,8 @@ static const char *const SEARCH_USAGE_MESSAGE =
     "Usage: PANPP search INDEX FX\n"
     "      -f <INT>   size of flanking region on both side of a specific "
     "string (default: 0)\n"
+    "      -b <INT>   batch size (default: 10000)\n"
+    "      -l <INT>   maximum query size (default: 32768)\n"
     "      -a         do not assemble overlapping specific strings\n"
     "      -x         output in FASTX instead of TSV\n"
     "      -@ <INT>   set threads (default: 1)\n"
