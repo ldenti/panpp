@@ -7,17 +7,21 @@ static const char *const MAIN_USAGE = "Usage: PANPP [index|search|version] -h";
 
 static const char *const INDEX_USAGE_MESSAGE =
     "Usage: PANPP index FA+\n"
-    "      -i       prefix for the index (default: RLCSA)\n"
-    "      -v       verbose mode (default: false)\n"
-    "      -@       set threads (default: 1)\n"
-    "      -h       display this help and exit\n"
+    "      -i <STR>   prefix for the index (default: RLCSA)\n"
+    "      -@ <INT>   set threads (default: 1)\n"
+    "      -v         verbose mode\n"
+    "      -h         display this help and exit\n"
     "\n";
 
 static const char *const SEARCH_USAGE_MESSAGE =
-    "Usage: PANPP search INDEX FQ\n"
-    "      -v       verbose mode (default: false)\n"
-    // "      -@       set threads (default: 1)\n"
-    "      -h       display this help and exit\n"
+    "Usage: PANPP search INDEX FX\n"
+    "      -f <INT>   size of flanking region on both side of a specific "
+    "string (default: 0)\n"
+    "      -a         do not assemble overlapping specific strings\n"
+    "      -x         output in FASTX instead of TSV\n"
+    "      -@ <INT>   set threads (default: 1)\n"
+    "      -v         verbose mode\n"
+    "      -h         display this help and exit\n"
     "\n";
 
 #endif

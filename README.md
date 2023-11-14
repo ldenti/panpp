@@ -39,3 +39,5 @@ cd ..
 - [ ] if partial indexes are already present, don't compute them
 - [X] ~ping-pong~
 - [ ] parallel ping-pong
+- [X] ~assembler~
+- [X] ~flanking~
