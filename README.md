@@ -1,7 +1,9 @@
-# panpp
-Specific strings from multiple genomes
+# PANgenome-based PingPong
+
+PANPP computes specific strings from a pangenome, seen as a collection of genomes.
 
 ``` sh
+# Dependencies: cmake and zlib-dev
 git clone git@github.com:ldenti/panpp.git
 cd panpp
 mkdir build
@@ -24,13 +26,3 @@ cd ..
 # 6	0	5
 # *	7	4
 ```
-
-### TODO
-- [X] ~FMD-index construction~
-- [X] ~queries on FMD~
-- [ ] start from given index
-- [ ] if partial indexes are already present, don't compute them
-- [X] ~ping-pong~
-- [X] ~parallel ping-pong~
-- [X] ~assembler~
-- [X] ~flanking~
