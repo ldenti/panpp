@@ -119,8 +119,8 @@ FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
       // For each subsequent base in alphabetical order by reverse complement
       // (as stored in BASES), allocate it the next part of the reverse range.
 
-      answers[base].reverse_start =
-          answers[base - 1].reverse_start + answers[base - 1].getLength();
+      answers[base].reverse_start = answers[fm6_comp(base)].reverse_start +
+                                    answers[fm6_comp(base)].getLength();
     }
 
     // Now all the per-base answers are filled in.
