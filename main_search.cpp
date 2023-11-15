@@ -19,16 +19,22 @@ struct fxentry_t {
   char *seq;
   char *qual;
   int l;
+  int size = 32768;
 
-  fxentry_t(int _l) {
-    name = (char *)malloc(_l);
-    seq = (char *)malloc(_l);
-    qual = (char *)malloc(_l);
+  fxentry_t() {
+    name = (char *)malloc(size);
+    seq = (char *)malloc(size);
+    qual = (char *)malloc(size);
     l = 0;
   }
 
   void set(char *_name, char *_seq, char *_qual, int _l) {
     l = _l;
+    if (l > size) {
+      size = l + 1;
+      seq = (char *)realloc(seq, size * sizeof(char));
+      qual = (char *)realloc(qual, size * sizeof(char));
+    }
     strcpy(name, _name);
     strcpy(seq, _seq);
     if (_qual == NULL)
@@ -175,18 +181,14 @@ int main_pingpong(int argc, char **argv) {
   (void)(argc); // suppress unused parameter warning
 
   int c;
-  int max_l = 32768;
   int flank = 0;
   int bsize = 10000;
   int threads = 1;
   bool assemble_flag = true;
   bool fx_out = false;
   // bool verbose = false;
-  while ((c = getopt(argc, argv, "l:f:@:b:xavh")) >= 0) {
+  while ((c = getopt(argc, argv, "f:@:b:xavh")) >= 0) {
     switch (c) {
-    case 'l':
-      max_l = atoi(optarg);
-      continue;
     case 'f':
       flank = atoi(optarg);
       continue;
@@ -223,9 +225,7 @@ int main_pingpong(int argc, char **argv) {
   spdlog::info("Allocating space..");
   FMDPosition range;
 
-  std::vector<fxentry_t> input;
-  for (int b = 0; b < bsize; ++b)
-    input.push_back(fxentry_t(max_l));
+  std::vector<fxentry_t> input(bsize);
   std::vector<std::vector<std::pair<int, int>>> output(bsize);
 
   gzFile fp = gzopen(query_path, "r");
