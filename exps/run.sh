@@ -94,7 +94,7 @@ then
 	    then
 		mkdir -p $WD/$n/${cov}x/
 		log "Searching from ${cov}x sample against $n haplotypes"
-		\time -vo $WD/$n/${cov}x/PANPP-search.time ../PANPP search $WD/$n/index $WD/reads/${cov}x.fq > $WD/$n/${cov}x/PANPP.sfs
+		\time -vo $WD/$n/${cov}x/PANPP-search.time ../PANPP search $WD/$n/index $WD/reads/${cov}x.fq -@ $threads > $WD/$n/${cov}x/PANPP.sfs
 	    else
 	        log "NOT searching from ${cov}x sample against $n haplotypes"
 	    fi
