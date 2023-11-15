@@ -125,7 +125,7 @@ FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
 
     // Now all the per-base answers are filled in.
 
-    for (CSA::usint base = 0; base < 5; ++base) {
+    for (CSA::usint base = 0; base < NUM_BASES; ++base) {
       // For each base in arbitrary order
       if (base == c) {
         // This is the base we're actually supposed to be extending with. Return

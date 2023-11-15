@@ -30,7 +30,7 @@ typedef CSA::RLEEncoder RangeEncoder;
 
 typedef std::pair<CSA::usint, CSA::usint> pair_type;
 
-static const CSA::usint NUM_BASES = 5;
+static const CSA::usint NUM_BASES = 6;
 
 /**
  * Represents the state (or result) of an FMD-index search, which is two ranges
