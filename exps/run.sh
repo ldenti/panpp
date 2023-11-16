@@ -142,7 +142,7 @@ then
 	    then
 		mkdir -p $WD/$n/${cov}x/
 		log "Searching from ${cov}x sample against $n haplotypes"
-		\time -vo $WD/$n/${cov}x/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/reads/${cov}x.fq --workdir $WD/$n/${cov}x/SVDSS --threads $threads
+		\time -vo $WD/$n/${cov}x/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/reads/${cov}x.fq --workdir $WD/$n/${cov}x/SVDSS --threads $threads --assemble
 		cat $WD/$n/${cov}x/SVDSS/*.sfs > $WD/$n/${cov}x/SVDSS.sfs
 	    else
 	        log "Skipping searching from ${cov}x sample against $n haplotypes"
@@ -160,7 +160,7 @@ then
 	then
 	    mkdir -p $WD/$n/$idx/
 	    log "Searching from $idx against $n haplotypes"
-	    \time -vo $WD/$n/$idx/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/$idx.fa --workdir $WD/$n/$idx/SVDSS --threads $threads
+	    \time -vo $WD/$n/$idx/SVDSS-search.time SVDSS search --index $WD/$n/index.fmd --fastq $WD/$idx.fa --workdir $WD/$n/$idx/SVDSS --threads $threads --assemble
 	    cat $WD/$n/$idx/SVDSS/*.sfs > $WD/$n/$idx/SVDSS.sfs
 	else
 	    log "Skipping searching from $idx against $n haplotypes"
