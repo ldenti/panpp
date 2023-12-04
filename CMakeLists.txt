@@ -39,7 +39,7 @@ SET(SDSL_INCLUDE_DIR ${SDSL_SOURCE_DIR}/include)
 add_library(SDSL STATIC IMPORTED)
 set_target_properties(SDSL PROPERTIES IMPORTED_LOCATION ${SDSL_SOURCE_DIR}/lib/libsdsl.a)
 
-add_dependencies(PANPP sdsl)
+add_dependencies(PANPP spdlog sdsl)
 
 target_include_directories(PANPP
   PRIVATE ${SDSL_INCLUDE_DIR}
