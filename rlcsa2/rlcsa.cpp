@@ -29,11 +29,11 @@ sdsl::rle_vector<64> *mergeVectors(sdsl::rle_vector<64> *first,
   //   std::cerr << ss[i];
   // std::cerr << std::endl;
 
-  int curr_pos_on_f = 0;
-  int curr_pos_on_s = 0;
-  int curr_run_value = 0;
-  int curr_run_len = 0;
-  int curr_position = 0;
+  uint64_t curr_pos_on_f = 0;
+  uint64_t curr_pos_on_s = 0;
+  uint64_t curr_run_value = 0;
+  uint64_t curr_run_len = 0;
+  uint64_t curr_position = 0;
   if (positions[0] == 0) {
     // First from second
     curr_run_value = ss[0];
@@ -47,8 +47,8 @@ sdsl::rle_vector<64> *mergeVectors(sdsl::rle_vector<64> *first,
   curr_run_len = 1;
 
   int curr_value = 0;
-  int curr_run_start = 0;
-  for (int p = 1; p < size; ++p) {
+  uint64_t curr_run_start = 0;
+  for (uint64_t p = 1; p < size; ++p) {
     if (p == positions[curr_position]) {
       // from second
       curr_value = ss[curr_pos_on_s];
@@ -175,6 +175,10 @@ RLCSA::RLCSA(RLCSA &index, RLCSA &increment, usint *positions, usint block_size,
     if (c == -1) {
       this->mergeEndPoints(index, increment);
     } else if (this->alphabet->hasChar(c) != 0) {
+      std::cerr << "Merging " << c << ": "
+                << index.data_size + index.number_of_sequences << "+"
+                << increment.data_size + increment.number_of_sequences << " = "
+                << psi_size << std::endl;
       this->array[c] =
           mergeVectors(index.array[c], increment.array[c], positions,
                        increment.data_size + increment.number_of_sequences,
