@@ -10,27 +10,18 @@
 #include <utility>
 #include <vector>
 
-#include "bits/deltavector.h"
-#include "bits/nibblevector.h"
-#include "bits/rlevector.h"
-#include "bits/succinctvector.h"
+// #include "bits/deltavector.h"
+// #include "bits/rlevector.h"
+
 #include "rlcsa.h"
-
-#include "utils.hpp"
-
-#ifdef USE_NIBBLE_VECTORS
-// Use Nibble Vectors to encode our range endpoint bitmaps
-typedef CSA::NibbleVector RangeVector;
-typedef CSA::NibbleEncoder RangeEncoder;
-#else
-// Use RLEVectors to encode our range endpoint bitmaps
-typedef CSA::RLEVector RangeVector;
-typedef CSA::RLEEncoder RangeEncoder;
-#endif
+// #include "utils.hpp"
 
 typedef std::pair<CSA::usint, CSA::usint> pair_type;
 
+#define fm6_comp(a) ((a) >= 1 && (a) <= 4 ? 5 - (a) : (a))
+
 static const CSA::usint NUM_BASES = 6;
+static inline bool isBase(int input) { return input >= 1 && input <= 5; }
 
 /**
  * Represents the state (or result) of an FMD-index search, which is two ranges
@@ -96,7 +87,7 @@ class FMD : public CSA::RLCSA {
 public:
   // We can only be constructed on a previously generated RLCSA index that
   // just happens to meet our requirements.
-  explicit FMD(const std::string &base_name, bool print = false);
+  explicit FMD(const std::string &base_name);
 
   /**
    * Extend a search by a character, either backward or forward. Ranges are in

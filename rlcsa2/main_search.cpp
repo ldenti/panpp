@@ -3,9 +3,9 @@
 #include <iostream>
 #include <zlib.h>
 
+#include "fmd.h"
 #include "kseq.h"
-#include "rlcsa2/fmd.h"
-#include "rlcsa2/rlcsa.h"
+#include "rlcsa.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
@@ -289,7 +289,6 @@ int main_exact(int argc, char **argv) {
   return 0;
 }
 
-/**
 int main_search(int argc, char **argv) {
   (void)(argc); // suppress unused parameter warning
 
@@ -340,7 +339,6 @@ int main_search(int argc, char **argv) {
 
   return 0;
 }
-**/
 
 // TODO: Move this to test subcommand
 // if (verbose) {

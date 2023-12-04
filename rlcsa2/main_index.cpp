@@ -7,8 +7,8 @@
 #include <zlib.h>
 
 #include "kseq.h"
-#include "rlcsa2/rlcsa.h"
-#include "rlcsa2/rlcsa_builder.h"
+#include "rlcsa.h"
+#include "rlcsa_builder.h"
 #include "spdlog/spdlog.h"
 
 #include "usage.hpp"
@@ -149,6 +149,7 @@ int main_index(int argc, char **argv) {
   spdlog::info("Storing full index to {}..", index_prefix);
   CSA::RLCSA *rlcsa = builder.getRLCSA();
   if (rlcsa != 0 && rlcsa->isOk()) {
+    std::cout << std::endl;
     // rlcsa->printInfo();
     // rlcsa->reportSize(true);
     rlcsa->writeTo(index_prefix);

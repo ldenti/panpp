@@ -6,10 +6,10 @@ include(FetchContent)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-project(PANPP VERSION 1.0.0)
-add_executable(PANPP rlcsa2/alphabet.cpp rlcsa2/misc/utils.cpp rlcsa2/bits/bitbuffer.cpp rlcsa2/bits/bitvector.cpp rlcsa2/bits/deltavector.cpp rlcsa2/bits/rlevector.cpp rlcsa2/suffixarray.cpp rlcsa2/rlcsa.cpp rlcsa2/rlcsa_builder.cpp rlcsa2/fmd.cpp main_index.cpp main_search.cpp main.cpp) 
-set_target_properties(PANPP PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
-target_compile_options(PANPP PRIVATE -Wall -Wextra)
+project(RLCSA VERSION 1.0.0)
+add_executable(RLCSA alphabet.cpp misc/utils.cpp bits/bitbuffer.cpp bits/bitvector.cpp bits/deltavector.cpp bits/rlevector.cpp suffixarray.cpp rlcsa.cpp rlcsa_builder.cpp fmd.cpp main_index.cpp main_search.cpp main.cpp) 
+set_target_properties(RLCSA PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+target_compile_options(RLCSA PRIVATE -Wall -Wextra)
 add_definitions(-DMASSIVE_DATA_RLCSA)
 
 find_package(OpenMP REQUIRED)
@@ -39,14 +39,14 @@ SET(SDSL_INCLUDE_DIR ${SDSL_SOURCE_DIR}/include)
 add_library(SDSL STATIC IMPORTED)
 set_target_properties(SDSL PROPERTIES IMPORTED_LOCATION ${SDSL_SOURCE_DIR}/lib/libsdsl.a)
 
-add_dependencies(PANPP sdsl)
+add_dependencies(RLCSA sdsl)
 
-target_include_directories(PANPP
+target_include_directories(RLCSA
   PRIVATE ${SDSL_INCLUDE_DIR}
   PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
-target_link_libraries(PANPP
+target_link_libraries(RLCSA
   PUBLIC spdlog::spdlog
   PUBLIC SDSL
   PUBLIC z

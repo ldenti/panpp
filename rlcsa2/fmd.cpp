@@ -1,4 +1,4 @@
-#include "fmd_simple.hpp"
+#include "fmd.h"
 
 FMDPosition::FMDPosition(CSA::usint forward_start, CSA::usint reverse_start,
                          CSA::usint end_offset)
@@ -27,7 +27,7 @@ std::ostream &operator<<(std::ostream &o, FMDPosition const &position) {
            << (position.reverse_start + position.end_offset);
 }
 
-FMD::FMD(const std::string &base_name, bool print) : RLCSA(base_name, print) {}
+FMD::FMD(const std::string &base_name) : RLCSA(base_name) {}
 
 FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
 
@@ -40,7 +40,6 @@ FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
   // by reverse complement.
 
   if (backward) {
-
     // Only allow characters in the index
     if (c >= CSA::CHARS || this->array[c] == 0) {
       return EMPTY_FMD_POSITION;
@@ -62,32 +61,26 @@ FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
       CSA::usint start =
           this->alphabet->cumulative(base) + this->number_of_sequences - 1;
 
-      // Get a pointer to the bit vector for this letter, which might be NULL if
-      // this base never appeared.
-      CSA::PsiVector *vector = this->array[base];
+      // Get a pointer to the rank structure for this letter, which might be 0
+      // if this base never appeared.
+      sdsl::rank_support_rle<1, 64> *ranks = this->ranks_supp[base];
 
-      if (vector == NULL) {
-
+      if (ranks == 0) {
         // Fill in forward_start and length with the knowledge that this
         // character doesn't exist. forward_start should never get used, but
         // end_offset will get used and probably needs to be -1 for empty.
         answers[base].end_offset = -1;
-
       } else {
-        // Get an iterator for the bit vector for this character, for
-        // calculating ranks/occurrences.
-        CSA::PsiVector::Iterator iter(*vector);
-
         // Fill in the forward-strand start positions and range end_offsets for
-        // each base's answer. TODO: do we want at_least set or not? What does
-        // it do?
-
+        // each base's answer.
         // First cache the forward_start rank we re-use
-        CSA::usint forward_start_rank = iter.rank(range.forward_start, true);
+
+        CSA::usint forward_start_rank =
+            ranks->rank(range.forward_start + 1 - 1) + 1;
 
         answers[base].forward_start = start + forward_start_rank;
         answers[base].end_offset =
-            iter.rank(range.forward_start + range.end_offset, false) -
+            ranks->rank(range.forward_start + range.end_offset + 1) -
             forward_start_rank;
       }
     }
@@ -111,31 +104,19 @@ FMDPosition FMD::extend(FMDPosition range, CSA::usint c, bool backward) const {
     // for when subdividing the reverse range and picking which subdivision to
     // take.
 
-    // Next, allocate the range for the base that comes first in alphabetical
-    // order by reverse complement.
     answers[0].reverse_start = range.reverse_start + endOfTextLength;
-
-    for (CSA::usint base = 1; base < NUM_BASES; base++) {
-      // For each subsequent base in alphabetical order by reverse complement
-      // (as stored in BASES), allocate it the next part of the reverse range.
-
-      answers[base].reverse_start = answers[fm6_comp(base)].reverse_start +
-                                    answers[fm6_comp(base)].getLength();
+    answers[4].reverse_start =
+        answers[0].reverse_start + answers[0].getLength();
+    for (CSA::usint base = 3; base > 0; --base) {
+      answers[base].reverse_start =
+          answers[base + 1].reverse_start + answers[base + 1].getLength();
     }
+    answers[5].reverse_start =
+        answers[1].reverse_start + answers[1].getLength();
 
     // Now all the per-base answers are filled in.
 
-    for (CSA::usint base = 0; base < NUM_BASES; ++base) {
-      // For each base in arbitrary order
-      if (base == c) {
-        // This is the base we're actually supposed to be extending with. Return
-        // its answer.
-        return answers[base];
-      }
-    }
-
-    // If we get here, they gave us something not in BASES somehow.
-    throw "Unrecognized base";
+    return answers[c];
   } else {
     // Flip the interval, do backwards search with the reverse complement of the
     // base, and then flip back.

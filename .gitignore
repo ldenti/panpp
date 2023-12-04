@@ -5,3 +5,6 @@ build/
 *.parameters
 *.fa
 *.fmd
+.vscode/
+*.o
+example/
